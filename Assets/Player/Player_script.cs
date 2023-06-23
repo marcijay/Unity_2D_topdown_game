@@ -19,6 +19,7 @@ public class Player_script : MonoBehaviour
     new Rigidbody2D rigidbody;
     Animator animator;
     AudioSource audioSource;
+    Vector2 movementVector;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,13 @@ public class Player_script : MonoBehaviour
         input.PlayerInput.Movement.Enable();
         input.PlayerActions.Shoot.Enable();
         input.PlayerActions.Shoot.performed += Shoot_performed;
+    }
+
+    private void OnDestroy()
+    {
+        input.PlayerActions.Shoot.performed -= Shoot_performed;
+        input.PlayerInput.Movement.Disable();
+        input.PlayerActions.Shoot.Disable();
     }
 
     private void Shoot_performed(InputAction.CallbackContext obj)
@@ -51,14 +59,18 @@ public class Player_script : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        rigidbody.MovePosition(-collision.relativeVelocity + rigidbody.position * characterSpeed * 2);
+        //rigidbody.MovePosition(-collision.relativeVelocity + rigidbody.position * characterSpeed * 2);
+    }
+
+    private void Update()
+    {
+        movementVector = input.PlayerInput.Movement.ReadValue<Vector2>();
+        animator.SetInteger("Movement_vertical", Mathf.RoundToInt(movementVector.y));
+        animator.SetInteger("Movement_horizontal", Mathf.RoundToInt(movementVector.x));
     }
 
     private void FixedUpdate()
     {
-        Vector2 movementVector = input.PlayerInput.Movement.ReadValue<Vector2>();
-        animator.SetInteger("Movement_vertical", Mathf.RoundToInt(movementVector.y));
-        animator.SetInteger("Movement_horizontal", Mathf.RoundToInt(movementVector.x));
-        rigidbody.MovePosition(rigidbody.position + movementVector * characterSpeed * Time.deltaTime);
+        rigidbody.MovePosition(rigidbody.position + movementVector * characterSpeed * Time.fixedDeltaTime);
     }
 }

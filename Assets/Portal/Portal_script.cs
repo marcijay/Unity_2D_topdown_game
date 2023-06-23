@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Portal_script : MonoBehaviour
 {
-    public string levelName;
+    public int leveToLoadNumber;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,9 +17,18 @@ public class Portal_script : MonoBehaviour
 
     public void LoadLevel()
     {
-        GameObject Player = GameObject.FindWithTag("Player");
-        DontDestroyOnLoad(Player);
-        DontDestroyOnLoad(GameObject.FindWithTag("Canvas"));
-        SceneManager.LoadScene(levelName);
+        if(leveToLoadNumber == 2)
+        {
+            DontDestroyOnLoad(GameObject.FindWithTag("Canvas"));
+            DontDestroyOnLoad(GameObject.FindWithTag("Player"));
+        }
+        if(leveToLoadNumber == 0) 
+        {
+            Destroy(GameObject.FindWithTag("Player"));
+            Destroy(GameObject.FindWithTag("Canvas"));
+            SceneManager.LoadScene("EndScreen");
+        }
+
+        if(leveToLoadNumber != 0) SceneManager.LoadScene("Level_" + leveToLoadNumber);
     }
 }

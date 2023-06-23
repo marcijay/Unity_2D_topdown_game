@@ -21,6 +21,8 @@ public class Health : MonoBehaviour
 
     public void GameOver()
     {
+        Destroy(GameObject.FindWithTag("Player"));
+        Destroy(GameObject.FindWithTag("Canvas"));
         SceneManager.LoadScene("GameOverScreen");
     }
 }

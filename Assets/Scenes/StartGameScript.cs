@@ -5,11 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class StartGameScript : MonoBehaviour
 {
-    public string levelName;
+    public string startingLevelName;
+    public string menuLevelName;
+
     public void OnStartButtonClick()
     {
-        Destroy(GameObject.FindWithTag("Player"));
-        Destroy(GameObject.FindWithTag("Canvas"));
-        SceneManager.LoadScene(levelName);
+        SceneManager.LoadScene(startingLevelName);
+    }
+
+    public void OnReurnButtonClick()
+    {
+        SceneManager.LoadScene(menuLevelName);
     }
 }

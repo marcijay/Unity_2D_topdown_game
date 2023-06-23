@@ -58,7 +58,7 @@ public class Enemy_script : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            StopCoroutine(standardBehaviour);
+            if (standardBehaviour != null) StopCoroutine(standardBehaviour);
             aggressiveBehaviour = WalkTowardsPlayer(collision.gameObject);
             StartCoroutine(aggressiveBehaviour);
         }
@@ -68,7 +68,7 @@ public class Enemy_script : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            StopCoroutine(aggressiveBehaviour);
+            if (aggressiveBehaviour != null) StopCoroutine(aggressiveBehaviour);
             standardBehaviour = Walking();
             StartCoroutine(standardBehaviour);
         }
@@ -87,7 +87,7 @@ public class Enemy_script : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            StopCoroutine(attackBehaviour);
+            if (aggressiveBehaviour != null) StopCoroutine(attackBehaviour);
         }
     }
 
@@ -103,7 +103,7 @@ public class Enemy_script : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 towards = Vector2.MoveTowards(gameObject.transform.position, desiredPosition, speed * Time.deltaTime);
+        Vector2 towards = Vector2.MoveTowards(gameObject.transform.position, desiredPosition, speed * Time.fixedDeltaTime);
         Vector2 direction = (Vector3)towards - gameObject.transform.position;
         animator.SetInteger("Movement_horizontal", Mathf.RoundToInt(direction.normalized.x));
         animator.SetInteger("Movement_vertical", Mathf.RoundToInt(direction.normalized.y));

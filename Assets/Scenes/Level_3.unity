@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -199,6 +200,69 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+--- !u!1 &321804779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 321804780}
+  m_Layer: 0
+  m_Name: HealingContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &321804780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321804779}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1362977113}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &690829379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 690829380}
+  m_Layer: 0
+  m_Name: FoliageContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &690829380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690829379}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1362977113}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362977108
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +410,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1470078206}
+  - {fileID: 690829380}
+  - {fileID: 321804780}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -366,29 +433,58 @@ MonoBehaviour:
   Enemy: {fileID: 7278776723680457449, guid: 217b97045982a7c43a07b3ea93f88a82, type: 3}
   Portal: {fileID: 5013078238460447596, guid: 5b5cdf29fbb8f8a4983d714ca6a15e46, type: 3}
   HealingItem: {fileID: 1881056339986943934, guid: 4c4dad3aeb582c84e82ca79b73a78c0f, type: 3}
+  enemyContainer: {fileID: 1470078205}
+  healingItemContainer: {fileID: 321804779}
+  foliageContainer: {fileID: 690829379}
   Player: {fileID: 0}
   grid: {fileID: 0}
   tileMap: {fileID: 0}
   tilemapRenderer: {fileID: 0}
-  plainsTile: {fileID: 11400000, guid: fc1ef7fd5b3b1cc43a37cb41c63966da, type: 2}
-  highlandTile: {fileID: 11400000, guid: 7d98e73e14a29944e8fe5892a9e28a71, type: 2}
+  plainsTile: {fileID: 11400000, guid: 691c2ea4b77538f488e281a45cbf2a3f, type: 2}
+  highlandTile: {fileID: 11400000, guid: 0b3e8d3dcc540b343826d4c222d53a42, type: 2}
   barierTile: {fileID: 11400000, guid: 00749bf6687509f4780f4930571c6132, type: 2}
   plainsFoliage:
-  - {fileID: 4539261255780564866, guid: 14ef12cafae087d43a36e8dc6e0dfdff, type: 3}
-  - {fileID: 4539261255780564866, guid: ef3f8ab70e2bdbc439ce560723ef4b40, type: 3}
-  - {fileID: 4539261255780564866, guid: 92562804974651f46bcf662d72cd8325, type: 3}
-  highlandFoliage:
   - {fileID: 169444902819875547, guid: 6eb62f20850680f4284b9fe5c50fe9cb, type: 3}
   - {fileID: 169444902819875547, guid: 7705987d634036a44941b5887a5d3800, type: 3}
-  - {fileID: 6838259515186646826, guid: a5d6f9627b6ae98499b4ceb68756ae83, type: 3}
-  - {fileID: 6962740261144203533, guid: 4a5a522e9a160fb49bf7a502f09d1c7f, type: 3}
-  - {fileID: 6962740261144203533, guid: 85f3df3882e50cf498d8341e59a79582, type: 3}
-  createPlayer: 0
-  mapHeight: 50
-  mapWidth: 50
-  enemies: 40
-  enemiesToKill: 10
-  foliageProbalility: 0.2
-  healingItemProbability: 0.05
-  plainsRangeTop: 0.5
-  highlandRangeTop: 0.65
+  - {fileID: 4539261255780564866, guid: ef3f8ab70e2bdbc439ce560723ef4b40, type: 3}
+  highlandFoliage: []
+  nextLevelNumber: 0
+  mapHeight: 60
+  mapWidth: 60
+  enemies: 50
+  enemiesToKill: 25
+  foliageProbalility: 0.15
+  healingItemProbability: 0.02
+  plainsRangeTop: 0.4
+  highlandRangeTop: 0.6
+--- !u!1 &1470078205
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1470078206}
+  m_Layer: 0
+  m_Name: EnemyContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1470078206
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470078205}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1362977113}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

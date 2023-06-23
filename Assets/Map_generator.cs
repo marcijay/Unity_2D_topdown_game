@@ -14,6 +14,10 @@ public class Map_generator : MonoBehaviour
     public GameObject Portal;
     public GameObject HealingItem;
 
+    public GameObject enemyContainer;
+    public GameObject healingItemContainer;
+    public GameObject foliageContainer;
+
     public GameObject Player;
 
     public Grid grid;
@@ -30,7 +34,9 @@ public class Map_generator : MonoBehaviour
     public List<(int x, int y)> plainsCoordinates;
     public List<(int x, int y)> highlandCoordinates;
 
-    public bool createPlayer;
+    //public bool createPlayer;
+    public int nextLevelNumber;
+
     private bool portalExists = false;
     private int startingEnemiesCount;
     private UI_scipt uiScript;
@@ -40,7 +46,7 @@ public class Map_generator : MonoBehaviour
     [Range(0, 500)]
     public int mapWidth;
 
-    [Range(0, 50)]
+    [Range(0, 100)]
     public int enemies;
 
     [Range(0, 50)]
@@ -108,23 +114,25 @@ public class Map_generator : MonoBehaviour
         foreach(var coordinates in plainsCoordinates)
         {
             float val = Random.Range(0f, 1f);
-            if(val < probalility)
+            if(val < probalility && plainsFoliage.Count > 0)
             {
                 GameObject foliageObject = plainsFoliage[Random.Range(0, plainsFoliage.Count)];
                 float x = coordinates.x + Random.Range(0f, 0.5f);
                 float y = coordinates.y + Random.Range(0f, 0.5f);
-                Instantiate(foliageObject, new Vector2(x, y), Quaternion.identity);
+                GameObject foliage = Instantiate(foliageObject, new Vector2(x, y), Quaternion.identity);
+                foliage.transform.SetParent(foliageContainer.transform);
             }
         }
         foreach (var coordinates in highlandCoordinates)
         {
             float val = Random.Range(0f, 1f);
-            if (val < probalility)
+            if (val < probalility && highlandFoliage.Count > 0)
             {
                 GameObject foliageObject = highlandFoliage[Random.Range(0, highlandFoliage.Count)];
                 float x = coordinates.x + Random.Range(0f, 0.5f);
                 float y = coordinates.y + Random.Range(0f, 0.5f);
-                Instantiate(foliageObject, new Vector2(x, y), Quaternion.identity);
+                GameObject foliage = Instantiate(foliageObject, new Vector2(x, y), Quaternion.identity);
+                foliage.transform.SetParent(foliageContainer.transform);
             }
         }
     }
@@ -136,9 +144,10 @@ public class Map_generator : MonoBehaviour
             float val = Random.Range(0f, 1f);
             if (val < probalility)
             {
-                float x = coordinates.x + Random.Range(0f, 0.5f);
-                float y = coordinates.y + Random.Range(0f, 0.5f);
-                Instantiate(HealingItem, new Vector2(x, y), Quaternion.identity);
+                float x = coordinates.x + Random.Range(0f, 0.2f);
+                float y = coordinates.y + Random.Range(0f, 0.2f);
+                GameObject healing = Instantiate(HealingItem, new Vector2(x, y), Quaternion.identity);
+                healing.transform.SetParent(healingItemContainer.transform);
             }
         }
     }
@@ -150,6 +159,7 @@ public class Map_generator : MonoBehaviour
             var pos = plainsCoordinates[Random.Range(0, plainsCoordinates.Count)];
             GameObject enemy = Instantiate(Enemy, new Vector3(pos.x + Random.Range(0, 3), pos.y + Random.Range(0, 3), 0), Quaternion.identity);
             enemy.GetComponent<Enemy_script>().OnDestroy += Map_generator_OnDestroy;
+            enemy.transform.SetParent(enemyContainer.transform);
         }
     }
 
@@ -190,7 +200,7 @@ public class Map_generator : MonoBehaviour
         uiScript = FindObjectOfType<Canvas>().GetComponent<UI_scipt>();
         UpdateEnemiesCount();
 
-        if (createPlayer)
+        if (nextLevelNumber == 2)
         {
             Player = Instantiate(PlayerPrefab, new Vector3(pos.x, pos.y, 0), Quaternion.identity);
 
@@ -201,8 +211,8 @@ public class Map_generator : MonoBehaviour
         {
             Player = GameObject.FindWithTag("Player");
             Player.transform.position = new Vector2(pos.x, pos.y);
-            Portal.GetComponent<Portal_script>().levelName = "StartMenu";
         }
-        
+
+        Portal.GetComponent<Portal_script>().leveToLoadNumber = nextLevelNumber;
     }
 }
